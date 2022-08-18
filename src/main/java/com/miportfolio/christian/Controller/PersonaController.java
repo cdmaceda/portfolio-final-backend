@@ -4,6 +4,7 @@ import com.miportfolio.christian.Entity.Persona;
 import com.miportfolio.christian.InterFace.IPersonaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +24,19 @@ public class PersonaController {
         public List<Persona> getPersona(){
             return ipersonaService.getPersona();
         }
-        
+        @PreAuthorize("hasRole('ADMIN')")
         @PostMapping("/personas/crear")
         public String createPersona(@RequestBody Persona persona){
             ipersonaService.savePersona(persona);
             return "El usuario fue creado correctamente";
         }
-        
+        @PreAuthorize("hasRole('ADMIN')")
         @DeleteMapping("/personas/borrar{id}")
         public String deletePersona(@PathVariable long id){
             ipersonaService.deletePersona(id);
             return "El usuario fue eliminado correctamente";
         }
-        
+        @PreAuthorize("hasRole('ADMIN')")
         @PutMapping("/personas/editar/{id}")
         public Persona editPersona(@PathVariable Long id,
                                    @RequestParam("nombre")String nuevoNombre,
