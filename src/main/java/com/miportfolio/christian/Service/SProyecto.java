@@ -1,4 +1,4 @@
-
+ 
 package com.miportfolio.christian.Service;
 
 import com.miportfolio.christian.Entity.Proyecto;
@@ -24,7 +24,7 @@ public class SProyecto {
         return rProyecto.findById(id);    
     }
     
-    public Optional <Proyecto> getByNombreP(String nombreP){
+    public Optional<Proyecto>getByNombreP(String nombreP){
         return rProyecto.findByNombreP(nombreP);
     }
     
