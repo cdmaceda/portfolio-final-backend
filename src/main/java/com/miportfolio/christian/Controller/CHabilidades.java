@@ -1,9 +1,10 @@
 package com.miportfolio.christian.Controller;
 
+import com.miportfolio.christian.Dto.dtoHabilidades;
 import com.miportfolio.christian.Entity.Habilidades;
 import com.miportfolio.christian.Security.Controller.Mensaje;
+import com.miportfolio.christian.Service.SHabilidades;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,32 +53,32 @@ public class CHabilidades {
     
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoHabilidades dtohabilidades){
-        if(StringUtils.isBlank(dtohabilidades.getPorcentajeH())){
-            return new ResponseEntity(new Mensaje("El nombre es oligatorio"), HttpStatus.BAD_REQUEST);
-        }
+//        if(StringUtils.isBlank(dtohabilidades.getPorcentajeH())){
+//            return new ResponseEntity(new Mensaje("El nombre es oligatorio"), HttpStatus.BAD_REQUEST);
+//        }
         if(sHabilidades.existsByPorcentajeH(dtohabilidades.getPorcentajeH())){
             return new ResponseEntity (new Mensaje("Ese habilidades ya existe"), HttpStatus.BAD_REQUEST);
         }
         
-        Habilidades  habilidades = new Habilidades(dtohabilidades.getPorcentaH(), dtohabilidades.getDescripcionH());
+        Habilidades  habilidades = new Habilidades(dtohabilidades.getPorcentajeH(), dtohabilidades.getDescripcionH());
         sHabilidades.save(habilidades);
         return new ResponseEntity(new Mensaje ("Habilidad agregada"), HttpStatus.OK);
     }
     
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoHablidades dtohabilidades){
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoHabilidades dtohabilidades){
         //si existe el ID
         if(!sHabilidades.existsbyId(id)){
             return new ResponseEntity(new Mensaje("El ID ingresado no existe"), HttpStatus.NOT_FOUND);
         }
         //Compara nombres
-        if(sHabilidades.existsByPorcentajeH(dtohabilidades.getPorcentajeH()) && sHabilidades.getByPorcentajeH(dtohabilidades.getPorcentajeH()).get().getId()!= id){
-            return new ResponseEntity(new Mensaje("Esa habilidad ya existe"), HttpStatus.BAD_REQUEST);
-        }
+//        if(sHabilidades.existsByPorcentajeH(dtohabilidades.getPorcentajeH()) && sHabilidades.getByPorcentajeH(dtohabilidades.getPorcentajeH()).get().getId()!= id){
+//            return new ResponseEntity(new Mensaje("Esa habilidad ya existe"), HttpStatus.BAD_REQUEST);
+//        }
         //El nombre no puede estar vacio
-        if(StringUtils.isBlank(dtohabilidades.getPorcentajeH())){
-            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
+//        if(StringUtils.isBlank(dtohabilidades.getPorcentajeH())){
+//            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+//        }
         Habilidades habilidades = sHabilidades.getOne(id).get();
         habilidades.setPorcentajeH(dtohabilidades.getPorcentajeH()); 
         habilidades.setDescripcionH((dtohabilidades.getDescripcionH()));
